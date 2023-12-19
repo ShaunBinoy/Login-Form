@@ -39,9 +39,33 @@ app.post("/signup", async (req,res)=>{
 
     await LogInModel.insertMany([data])
 
-    res.render("home")
+    res.render("login")
     
 })
+
+app.post("/login", async (req,res)=>{
+
+    try{
+        const check=await LogInModel.findOne({name:req.body.name})
+
+        if(check.password===req.body.password){
+            res.render("home")
+        }
+
+        else{
+            res.send("Wrong Password")
+        }
+        
+    }
+    catch{
+        res.send("Wrong Details")
+
+    }
+   
+    
+})
+
+
 
 app.listen(3000,()=>{
     console.log("Port Connected");
